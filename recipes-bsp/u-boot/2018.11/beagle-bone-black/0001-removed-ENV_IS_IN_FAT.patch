@@ -1,0 +1,64 @@
+From cab6a9c445d0bef56b5ba0f4377ac160f710cd09 Mon Sep 17 00:00:00 2001
+From: student <student@ReliableEmbeddedSystems.com>
+Date: Sat, 5 Jan 2019 17:33:20 +0100
+Subject: [PATCH] removed ENV_IS_IN_FAT
+
+Signed-off-by: student <student@ReliableEmbeddedSystems.com>
+---
+ env/Kconfig                  | 5 ++---
+ include/configs/am335x_evm.h | 5 +++++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/env/Kconfig b/env/Kconfig
+index 9011109..e2bd676 100644
+--- a/env/Kconfig
++++ b/env/Kconfig
+@@ -57,7 +57,6 @@ config ENV_IS_IN_FAT
+ 	depends on !CHAIN_OF_TRUST
+ 	default y if ARCH_BCM283X
+ 	default y if ARCH_SUNXI && MMC
+-	default y if MMC_OMAP_HS && TI_COMMON_CMD_OPTIONS
+ 	select FS_FAT
+ 	select FAT_WRITE
+ 	help
+@@ -157,6 +156,7 @@ config ENV_IS_IN_MMC
+ 	default y if MX6SX || MX7D
+ 	default y if TEGRA30 || TEGRA124
+ 	default y if TEGRA_ARMV8_COMMON
++	default y if MMC_OMAP_HS && TI_COMMON_CMD_OPTIONS
+ 	help
+ 	  Define this if you have an MMC device which you want to use for the
+ 	  environment.
+@@ -364,14 +364,13 @@ config ENV_FAT_INTERFACE
+ 	string "Name of the block device for the environment"
+ 	depends on ENV_IS_IN_FAT
+ 	default "mmc" if ARCH_SUNXI
+-	default "mmc" if TI_COMMON_CMD_OPTIONS || ARCH_ZYNQMP || ARCH_AT91
++	default "mmc" if ARCH_ZYNQMP || ARCH_AT91
+ 	help
+ 	  Define this to a string that is the name of the block device.
+ 
+ config ENV_FAT_DEVICE_AND_PART
+ 	string "Device and partition for where to store the environemt in FAT"
+ 	depends on ENV_IS_IN_FAT
+-	default "0:1" if TI_COMMON_CMD_OPTIONS
+ 	default "0:auto" if ARCH_ZYNQMP
+ 	default "0:auto" if ARCH_SUNXI && MMC_SUNXI_SLOT_EXTRA = -1
+ 	default "1:auto" if ARCH_SUNXI && MMC_SUNXI_SLOT_EXTRA != -1
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 5d5b09b..bd999d3 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -340,4 +340,9 @@
+ #define CLK_SYNTHESIZER_I2C_ADDR 0x65
+ #endif
+ 
++/*-----------------------------------------------------------------------
++ * environment organization
++ */
++#define CONFIG_SYS_MMC_ENV_DEV 0
++
+ #endif	/* ! __CONFIG_AM335X_EVM_H */
+-- 
+2.7.4
+

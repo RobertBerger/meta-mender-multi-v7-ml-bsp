@@ -1,0 +1,87 @@
+From e77924f847c52f465e00f00a73a02aec55a25212 Mon Sep 17 00:00:00 2001
+From: student <student@ReliableEmbeddedSystems.com>
+Date: Mon, 7 Jan 2019 18:30:30 +0100
+Subject: [PATCH] try to fix CONFIG_ENV_IS_IN_MMC
+
+Signed-off-by: student <student@ReliableEmbeddedSystems.com>
+---
+ board/phytec/pcm058/pcm058.c |  2 +-
+ configs/pcm058_defconfig     |  3 ++-
+ include/configs/pcm058.h     | 18 +++++++++++++++---
+ 3 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/board/phytec/pcm058/pcm058.c b/board/phytec/pcm058/pcm058.c
+index 5ecaf00..a26deb5 100644
+--- a/board/phytec/pcm058/pcm058.c
++++ b/board/phytec/pcm058/pcm058.c
+@@ -180,7 +180,7 @@ static iomux_v3_cfg_t const usdhc4_pads[] = {
+ 
+ int board_mmc_get_env_dev(int devno)
+ {
+-	return devno - 1;
++	return devno;
+ }
+ 
+ int board_mmc_getcd(struct mmc *mmc)
+diff --git a/configs/pcm058_defconfig b/configs/pcm058_defconfig
+index 66ee9ed..996bfab 100644
+--- a/configs/pcm058_defconfig
++++ b/configs/pcm058_defconfig
+@@ -39,7 +39,8 @@ CONFIG_MTDIDS_DEFAULT="nand0=nand"
+ CONFIG_MTDPARTS_DEFAULT="mtdparts=nand:16m(uboot),1m(env),-(rootfs)"
+ CONFIG_CMD_UBI=y
+ # CONFIG_SPL_PARTITION_UUIDS is not set
+-CONFIG_ENV_IS_IN_SPI_FLASH=y
++# CONFIG_ENV_IS_IN_SPI_FLASH is not set
++CONFIG_ENV_IS_IN_MMC=y
+ CONFIG_DM=y
+ CONFIG_FSL_ESDHC=y
+ CONFIG_MTD=y
+diff --git a/include/configs/pcm058.h b/include/configs/pcm058.h
+index 49048c1..41706c0 100644
+--- a/include/configs/pcm058.h
++++ b/include/configs/pcm058.h
+@@ -3,7 +3,6 @@
+  * Copyright (C) Stefano Babic <sbabic@denx.de>
+  */
+ 
+-
+ #ifndef __PCM058_CONFIG_H
+ #define __PCM058_CONFIG_H
+ 
+@@ -78,17 +77,30 @@
+ #define CONFIG_SYS_FSL_USDHC_NUM	1
+ 
+ /* Environment organization */
+-#define CONFIG_ENV_SIZE                (16 * 1024)
++/* #define CONFIG_ENV_SIZE                (16 * 1024) */
++#define CONFIG_SYS_REDUNDAND_ENVIRONMENT
++
++#if defined(CONFIG_ENV_IS_IN_MMC)
++#define CONFIG_SYS_MMC_ENV_DEV          (0)
++#define CONFIG_SYS_MMC_ENV_PART         (0)
++#define CONFIG_ENV_OFFSET               (0x800000)
++#define CONFIG_ENV_SIZE                 (0x20000)
++#define CONFIG_ENV_OFFSET_REDUND        (0x820000)
++#define CONFIG_ENV_SIZE_REDUND          (0x20000)
++#endif
++
++#if defined(CONFIG_ENV_IS_IN_SPI_FLASH)
++#error env is in SPI flash
+ #define CONFIG_ENV_OFFSET		(1024 * SZ_1K)
+ #define CONFIG_ENV_SECT_SIZE		(64 * SZ_1K)
+ #define CONFIG_ENV_SPI_BUS             CONFIG_SF_DEFAULT_BUS
+ #define CONFIG_ENV_SPI_CS              CONFIG_SF_DEFAULT_CS
+ #define CONFIG_ENV_SPI_MODE            CONFIG_SF_DEFAULT_MODE
+ #define CONFIG_ENV_SPI_MAX_HZ          CONFIG_SF_DEFAULT_SPEED
+-#define CONFIG_SYS_REDUNDAND_ENVIRONMENT
+ #define CONFIG_ENV_OFFSET_REDUND       (CONFIG_ENV_OFFSET + \
+ 						CONFIG_ENV_SECT_SIZE)
+ #define CONFIG_ENV_SIZE_REDUND         CONFIG_ENV_SIZE
++#endif
+ 
+ #ifdef CONFIG_ENV_IS_IN_NAND
+ #define CONFIG_ENV_OFFSET              (0x1E0000)
+-- 
+2.7.4
+

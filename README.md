@@ -73,13 +73,15 @@ supported BOARDS
 ls meta-mender-multi-v7-ml-bsp/conf/machine/
 ```
 ```bash
-am335x-phytec-wega.conf  beagle-bone-black.conf  common.inc  imx6q-phytec-mira-rdk-nand.conf
+am335x-phytec-wega.conf  beagle-bone-black.conf  beagle-bone-green.conf  common.inc  imx6q-phytec-mira-rdk-nand.conf
 ```
 so we have those choices:
 
 * am335x-phytec-wega
 
 * beagle-bone-black
+
+* beagle-bone-green
 
 * imx6q-phytec-mira-rdk-nand
 

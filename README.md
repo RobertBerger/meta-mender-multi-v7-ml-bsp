@@ -100,7 +100,11 @@ export TEMPLATECONF="meta-mender-multi-v7-ml-bsp/template-${BOARD}"
 source oe-init-build-env ${BOARD}
 ```
 My template adds ```my-mender-layer``` to ```conf/bblayers.conf```.
-You might need to adjust this if necessary.
+You might need to adjust this if necessary:
+
+```bash
+vim conf/bblayers.conf
+```
 
 ```bash
 cp ../meta-mender-multi-v7-ml-bsp/template-common/site.conf.sample conf/site.conf

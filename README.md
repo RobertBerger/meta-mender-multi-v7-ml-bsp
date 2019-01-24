@@ -226,6 +226,13 @@ Note: if you kill ```MLO``` and ```u-boot.img``` on your eMMC you don't need to 
 
 The system should start up and boot from SD card.
 
+```console
+root@beagle-bone-black:~# mender -show-artifact
+INFO[0000] Configuration file does not exist: /var/lib/mender/mender.conf  module=config
+INFO[0000] Loaded configuration file: /etc/mender/mender.conf  module=config
+INFO[0000] Mender running on partition: /dev/mmcblk0p2   module=main
+release-5
+```
 
 Tests
 =====

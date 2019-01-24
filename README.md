@@ -106,11 +106,13 @@ You might need to adjust this if necessary:
 vim conf/bblayers.conf
 ```
 
-Inspect/change if necessary ```site.conf```:
+Copy ```site.conf```:
 
 ```bash
 cp ../meta-mender-multi-v7-ml-bsp/template-common/site.conf.sample conf/site.conf
 ```
+
+Inspect/change if necessary ```site.conf```:
 
 You might need to adjust the site.conf or better the site.conf.sample once it works for you.
 

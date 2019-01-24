@@ -10,6 +10,21 @@ Preferred lab setup
 
 Ideally you have a DHCP server which gives out IP addresses when booting from SD card.
 
+Mender setup
+============
+
+I used a self hosted Mender Production Server.
+
+Please follow the instructions here:
+
+https://docs.mender.io/1.7/getting-started/requirements
+
+https://docs.mender.io/1.7/administration/production-installation
+
+https://docs.mender.io/1.7/artifacts/yocto-project/building-for-production
+
+I added a layer with the keys called my-mender-layer.
+
 variables
 =========
 
@@ -43,9 +58,13 @@ meta-mender
 
 ```bash
 git clone git://github.com/mendersoftware/meta-mender.git -b ${MENDER_BRANCH}
-
-https://github.com/mendersoftware/meta-mender.git
 ```
+
+my-mender-layer
+===============
+
+Well you need your own here.
+This is where you would git clone it.
 
 supported BOARDS
 ================

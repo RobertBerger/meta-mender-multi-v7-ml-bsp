@@ -3,6 +3,13 @@
 
 #@DESCRIPTION: Machine configuration for mender/multi-v7 compatible systems
 
+# please note, that multi-v7 is dummy machine
+# and actually just a copy of imx6q-phytec-mira-rdk-nand
+# we try to build multi-v7 images, which are supposed to run
+# on all the boards
+# but can still load board specific images on boards
+@ the prompt (multi-v7) or (${MACHINE}) should show the running image
+
 # the default MACHINE_EXTRA_RRECOMMENDS
 # would not install the kernel modules on the core-image-minimal rootfs
 # we could also build a core-image-basic to get them included or:
@@ -53,12 +60,14 @@ KERNEL_DEVICE_TREE_ALL = "am335x-boneblack.dtb \
 # add new device tree per MACHINE here - at the end:
 KERNEL_DEVICETREE_am335x-phytec-wega = "${KERNEL_DEVICE_TREE_ALL} am335x-wega-rdk.dtb"
 KERNEL_DEVICETREE_imx6q-phytec-mira-rdk-nand = "${KERNEL_DEVICE_TREE_ALL} imx6q-phytec-mira-rdk-nand.dtb"
+KERNEL_DEVICETREE_multi-v7 = "${KERNEL_DEVICE_TREE_ALL} imx6q-phytec-mira-rdk-nand.dtb"
 KERNEL_DEVICETREE_beagle-bone-black = "${KERNEL_DEVICE_TREE_ALL} am335x-boneblack.dtb"
 KERNEL_DEVICETREE_beagle-bone-green = "${KERNEL_DEVICE_TREE_ALL} am335x-bonegreen.dtb"
 
 # SPL_BINARY:
 SPL_BINARYNAME_am335x-phytec-wega = "MLO"
 SPL_BINARYNAME_imx6q-phytec-mira-rdk-nand = "SPL"
+SPL_BINARYNAME_multi-v7 = "SPL"
 SPL_BINARYNAME_beagle-bone-black = "MLO"
 SPL_BINARYNAME_beagle-bone-green = "MLO"
 SPL_BINARYNAME_beagle-bone-black-wireless = "MLO"
@@ -70,6 +79,7 @@ UBOOT_SUFFIX = "img"
 # UBOOT defconfig:
 UBOOT_MACHINE_am335x-phytec-wega = "pcm051_rev3_defconfig"
 UBOOT_MACHINE_imx6q-phytec-mira-rdk-nand = "pcm058_defconfig"
+UBOOT_MACHINE_multi-v7 = "pcm058_defconfig"
 UBOOT_MACHINE_beagle-bone-black = "am335x_evm_defconfig"
 UBOOT_MACHINE_beagle-bone-green = "am335x_evm_defconfig"
 

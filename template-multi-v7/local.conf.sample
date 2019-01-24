@@ -300,16 +300,16 @@ MENDER_FEATURES_ENABLE_append = " mender-uboot mender-image-sd"
 MENDER_FEATURES_DISABLE_append = " mender-grub mender-image-uefi"
 
 # set the serial console(s) passed from U-Boot to kernel commandline:
-MENDER_UBOOT_PRE_SETUP_COMMANDS = "console_bootargs=console=\$\{console}; setenv bootargs \$\{console_bootargs} \$\{bootargs}"
+MENDER_UBOOT_PRE_SETUP_COMMANDS = "mmc rescan; setenv console ttymxc1,115200n8; console_bootargs=console=\$\{console}; setenv bootargs \$\{console_bootargs} \$\{bootargs}; setenv fdt_high 0xffffffff; setenv fdt_addr_r 0x18000000; setenv kernel_addr_r 0x12000000"
 
 # don't use vfat partition for MLO
-MENDER_IMAGE_BOOTLOADER_FILE = "MLO"
+MENDER_IMAGE_BOOTLOADER_FILE = "SPL"
 # this sets the offset where the bootloader should be placed,
 # .counting from the start of the storage medium.
 # The offset is specified in units of 512-byte sectors.
 # Obviously this needs to be non-zero, or the partition table itself would be overwritten.
 # something like this should work:
-# sudo dd if=./u-boot/MLO of=${DISK} count=1 seek=1 bs=128k
+# sudo dd if=./u-boot/SPL of=${DISK} seek=1 bs=1k
 # -- bs=BYTES
 #              read and write up to BYTES bytes at a time (default: 512);
 #              overrides ibs and obs
@@ -322,15 +322,21 @@ MENDER_IMAGE_BOOTLOADER_FILE = "MLO"
 #       seek=N skip N obs-sized blocks at start of output
 #
 #    seek defines the offset, so I would say
-#    start at 128 KBytes (128*1024)
-# we want an offset of 128K (0x20000) -> 0x20000 / 0x200 = 0x100 i.e. 256
-MENDER_IMAGE_BOOTLOADER_BOOTSECTOR_OFFSET = "256"
+#    start at 1 KBytes (1*1024)
+# we want an offset of 1K (0x400) -> 0x400 / 0x200 = 0x2 i.e. 2
+MENDER_IMAGE_BOOTLOADER_BOOTSECTOR_OFFSET = "2"
+
 
 # don't use vfat partition for u-boot.img
 MENDER_IMAGE_SECOND_BOOTLOADER_FILE = "u-boot.img"
+
+# this sets the offset where the bootloader should be placed,
+# .counting from the start of the storage medium.
+# The offset is specified in units of 512-byte sectors.
+# Obviously this needs to be non-zero, or the partition table itself would be overwritten.
 # something like this should work:
-# sudo dd if=./u-boot/u-boot.img of=${DISK} count=2 seek=1 bs=384k
-# # -- bs=BYTES
+# sudo dd if=./u-boot/u-boot.img of=${DISK} seek=69 bs=1k
+# -- bs=BYTES
 #              read and write up to BYTES bytes at a time (default: 512);
 #              overrides ibs and obs
 #
@@ -342,15 +348,15 @@ MENDER_IMAGE_SECOND_BOOTLOADER_FILE = "u-boot.img"
 #       seek=N skip N obs-sized blocks at start of output
 #
 #    seek defines the offset, so I would say
-#    start at 384 KBytes (384*1024)
-# we want an offset of 384K (0x60000) -> 0x60000 / 0x200 = 0x300 i.e. 768
-MENDER_IMAGE_SECOND_BOOTLOADER_BOOTSECTOR_OFFSET = "768"
+#    start at 69 KBytes (69*1024)
+# we want an offset of 69K (0x11400) -> 0x11400 / 0x200 = 0x8A i.e. 138
+MENDER_IMAGE_SECOND_BOOTLOADER_BOOTSECTOR_OFFSET = "138"
 
 # files which should not be in vfat /uboot partition
 MENDER_IMAGE_BOOT_FILES_REMOVE="${IMAGE_BOOT_FILES}"
 ######################### default settings ###########################
 
-MACHINE = "am335x-phytec-wega"
+MACHINE = "multi-v7"
 
 ######################## Mender stuff which changes ##################
 # MENDER_DEVICE_TYPES_COMPATIBLE
@@ -361,10 +367,10 @@ MACHINE = "am335x-phytec-wega"
 # a .mender update, not when building a partitioned image (any suffix ending in img).
 # 
 # It defaults to the value of ${MACHINE}.
-MENDER_DEVICE_TYPES_COMPATIBLE = "multi-v7"
+MENDER_DEVICE_TYPES_COMPATIBLE = "am335x-phytec-wega beagle-bone-black beagle-bone-green imx6q-phytec-mira-rdk-nand"
 
 # The name of the disk image and Artifact that will be built.
 # This is what the device will report that it is running, and different updates
 # must have different names because Mender will skip installation of an Artifact
 # if it is already installed.
-MENDER_ARTIFACT_NAME = "${MACHINE}-multi-v7-rel-1"
+MENDER_ARTIFACT_NAME = "${MACHINE}-rel-1"

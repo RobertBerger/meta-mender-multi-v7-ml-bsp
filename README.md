@@ -99,7 +99,7 @@ export TEMPLATECONF="meta-mender-multi-v7-ml-bsp/template-${BOARD}"
 
 source oe-init-build-env ${BOARD}
 ```
-My template adds ```console my-meta-layer``` to ```console conf/bblayers.conf```.
+My template adds ```my-meta-layer``` to ```conf/bblayers.conf```.
 You might need to adjust this if necessary.
 
 ```bash

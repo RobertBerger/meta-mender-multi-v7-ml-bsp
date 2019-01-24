@@ -147,6 +147,48 @@ build
 ```bash
 bitbake core-image-minimal
 ```
+Grab a coffee or more. This will take some time!
+
+You should see something like this:
+
+```console
+bitbake core-image-minimal
+NOTE: Started PRServer with DBfile: /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/bleeding-mender/poky/beagle-bone-black/cache/prserv.sqlite3, IP: 127.
+0.0.1, PORT: 42525, PID: 2342
+WARNING: "MENDER_IMAGE_SECOND_BOOTLOADER_FILE" is not a recognized MENDER_ variable. Typo?##################################################### | ETA:  0:00:00
+WARNING: "MENDER_IMAGE_SECOND_BOOTLOADER_BOOTSECTOR_OFFSET" is not a recognized MENDER_ variable. Typo?
+WARNING: "MENDER_IMAGE_BOOT_FILES_REMOVE" is not a recognized MENDER_ variable. Typo?
+Parsing recipes: 100% |#########################################################################################################################| Time: 0:00:36
+Parsing of 813 .bb files complete (0 cached, 813 parsed). 1293 targets, 61 skipped, 0 masked, 0 errors.
+NOTE: Resolving any missing task queue dependencies
+
+Build Configuration:
+BB_VERSION           = "1.40.0"
+BUILD_SYS            = "x86_64-linux"
+NATIVELSBSTRING      = "ubuntu-16.04"
+TARGET_SYS           = "arm-poky-linux-gnueabi"
+MACHINE              = "beagle-bone-black"
+DISTRO               = "poky"
+DISTRO_VERSION       = "2.6.1"
+TUNE_FEATURES        = "arm armv7a vfp neon"
+TARGET_FPU           = "softfp"
+meta-mender-multi-v7-ml-bsp = "master:daf194f554b9b7786d495615b2b9f8d580cc1b5a"
+meta                 
+meta-poky            
+meta-yocto-bsp       = "2019-01-16-thud-2.6.1-pre-release:3a651983d15ab3d721f47aa97ed7712557ca0f07"
+meta-mender-core     = "thud:b411e6078e7bffece46b7ebb64cbb8062a15ef46"
+my-mender-layer      = "master:95fd9e22fc23a0e35ab14e8e2fd0b9c0f441eff0"
+
+Initialising tasks: 100% |######################################################################################################################| Time: 0:00:02
+Checking sstate mirror object availability: 100% |##############################################################################################| Time: 0:00:03
+Sstate summary: Wanted 810 Found 382 Missed 856 Current 0 (47% match, 0% complete)
+NOTE: Executing SetScene Tasks
+NOTE: Executing RunQueue Tasks
+WARNING: u-boot-1_2018.11-r0 do_provide_mender_defines: Found more than one dtb specified in KERNEL_DEVICETREE. Only one should be specified. Choosing the last one.
+NOTE: Tasks Summary: Attempted 3090 tasks of which 1142 didn't need to be rerun and all succeeded.
+
+Summary: There were 4 WARNING messages shown.
+```
 
 The result of the build can be found under
 
@@ -170,7 +212,7 @@ I would do the following in order to flash my image:
 ```bash
 cd tmp/deploy/images/${BOARD}
 
-sudo /opt/etcher/Etcher-cli-1.2.0-linux-x64/etcher core-image-minimal-${BOARD}.wic
+sudo /opt/etcher/Etcher-cli-1.2.0-linux-x64/etcher core-image-minimal-${BOARD}.sdimg
 ```
 
 first boot
@@ -180,6 +222,7 @@ beagle-bone-black:
 
 * press S2 while applying power to force booting from SD card
 
+Note: if you kill ```MLO``` and ```u-boot.img``` on your eMMC you don't need to press the button anymore.
 
 The system should start up and boot from SD card.
 
@@ -188,15 +231,13 @@ Tests
 =====
 
 ```console
-sysvinit:
+				   										.sdimg						.mender
 
-				uenvcmd_mmc_all		uenvcmd_tftp_nfs
+am335x-phytec-wega										
 
-am335x-phytec-wega		OK			OK
+beagle-bone-black
 
-beagle-bone-black 		OK			OK
-
-mx6q-phytec-mira-rdk-nand       [1] OK                  [2]
+mx6q-phytec-mira-rdk-nand
 ```
 
 [1] -->

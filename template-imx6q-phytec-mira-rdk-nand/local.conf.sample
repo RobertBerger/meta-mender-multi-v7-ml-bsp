@@ -367,7 +367,7 @@ MACHINE = "imx6q-phytec-mira-rdk-nand"
 # a .mender update, not when building a partitioned image (any suffix ending in img).
 # 
 # It defaults to the value of ${MACHINE}.
-MENDER_DEVICE_TYPES_COMPATIBLE += "multi-v7"
+MENDER_DEVICE_TYPES_COMPATIBLE_append = "multi-v7"
 
 # The name of the disk image and Artifact that will be built.
 # This is what the device will report that it is running, and different updates

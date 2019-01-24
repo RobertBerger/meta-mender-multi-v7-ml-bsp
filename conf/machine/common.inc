@@ -8,7 +8,7 @@
 # we try to build multi-v7 images, which are supposed to run
 # on all the boards
 # but can still load board specific images on boards
-@ the prompt (multi-v7) or (${MACHINE}) should show the running image
+# the prompt (multi-v7) or (${MACHINE}) should show the running image
 
 # the default MACHINE_EXTRA_RRECOMMENDS
 # would not install the kernel modules on the core-image-minimal rootfs

@@ -9,7 +9,7 @@ BBFILES ?= ""
 # overwrite the mender class
 
 BBLAYERS ?= " \
-  ##OEROOT##/meta-mainline/meta-multi-v7-ml-mender-bsp \
+  ##OEROOT##/meta-multi-v7-ml-mender-bsp \
   ##OEROOT##/meta \
   ##OEROOT##/meta-poky \
   ##OEROOT##/meta-yocto-bsp \

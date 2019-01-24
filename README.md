@@ -98,13 +98,17 @@ export BOARD="beagle-bone-black"
 export TEMPLATECONF="meta-mender-multi-v7-ml-bsp/template-${BOARD}"
 
 source oe-init-build-env ${BOARD}
+```
+My template adds ```console my-meta-layer``` to ```console conf/bblayers.conf```.
+You might need to adjust this if necessary.
 
+```bash
 cp ../meta-mender-multi-v7-ml-bsp/template-common/site.conf.sample conf/site.conf
 ```
 
 You might need to adjust the site.conf or better the site.conf.sample once it works for you.
 
-Most likely you want to point DL_DIR and SSTATE_DIR to some dir which is non-volatile 
+Most likely you want to point DL_DIR and SSTATE_DIR to some dir which is non-volatile
 and where you have write permissions. If you don't know what they are, just comment them out.
 
 ```bash
@@ -147,7 +151,7 @@ flash
 
 I usually use the CLI for Etcher to flash the image, but with the GUI it should work as well.
 
-If you don't already have it, download 
+If you don't already have it, download
 
 https://www.balena.io/etcher/
 

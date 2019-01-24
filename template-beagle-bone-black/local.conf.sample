@@ -253,12 +253,6 @@ CONF_VERSION = "1"
 # This really saves a lot of disk space!
 INHERIT += "rm_work"
 
-# The name of the disk image and Artifact that will be built.
-# This is what the device will report that it is running, and different updates
-# must have different names because Mender will skip installation of an Artifact
-# if it is already installed.
-MENDER_ARTIFACT_NAME = "release-1"
-
 INHERIT += "mender-full"
 
 # Build for Hosted Mender
@@ -354,7 +348,23 @@ MENDER_IMAGE_SECOND_BOOTLOADER_BOOTSECTOR_OFFSET = "768"
 
 # files which should not be in vfat /uboot partition
 MENDER_IMAGE_BOOT_FILES_REMOVE="${IMAGE_BOOT_FILES}"
-                                                                       
 ######################### default settings ###########################
 
 MACHINE = "beagle-bone-black"
+
+######################## Mender stuff which changes ##################
+# MENDER_DEVICE_TYPES_COMPATIBLE
+#
+# A space separated string of device types that determine which types 
+# of devices this update is suitable for. This complements the 
+# MENDER_DEVICE_TYPE variable, and is only relevant when building 
+# a .mender update, not when building a partitioned image (any suffix ending in img).
+# 
+# It defaults to the value of ${MACHINE}.
+MENDER_DEVICE_TYPES_COMPATIBLE = "multi-v7"
+
+# The name of the disk image and Artifact that will be built.
+# This is what the device will report that it is running, and different updates
+# must have different names because Mender will skip installation of an Artifact
+# if it is already installed.
+MENDER_ARTIFACT_NAME = "release-5"

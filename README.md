@@ -73,7 +73,7 @@ supported BOARDS
 ls meta-mender-multi-v7-ml-bsp/conf/machine/
 ```
 ```bash
-am335x-phytec-wega.conf  beagle-bone-black.conf  beagle-bone-green.conf  common.inc  imx6q-phytec-mira-rdk-nand.conf
+am335x-phytec-wega.conf  beagle-bone-black.conf  beagle-bone-green.conf  common.inc  imx6q-phytec-mira-rdk-nand.conf multi-v7.conf
 ```
 so we have those choices:
 
@@ -84,6 +84,8 @@ so we have those choices:
 * beagle-bone-green
 
 * imx6q-phytec-mira-rdk-nand
+
+* multi-v7 (this is a dummy machine which is used to create .mender running on all others)
 
 more might be added.
 

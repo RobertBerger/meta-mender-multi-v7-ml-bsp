@@ -358,6 +358,11 @@ MENDER_IMAGE_BOOT_FILES_REMOVE="${IMAGE_BOOT_FILES}"
 
 MACHINE = "multi-v7"
 
+# this is supposed to be a "dummy" machine which produces only
+# mender images and no SD card images
+IMAGE_FSTYPES_remove = "sdimg"
+IMAGE_FSTYPES_remove = "sdimg.bmap"
+
 ######################## Mender stuff which changes ##################
 # MENDER_DEVICE_TYPES_COMPATIBLE
 #
